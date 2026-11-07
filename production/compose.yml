@@ -1,0 +1,216 @@
+# Zrzur production stack for the main server (app/api/ws/cdn.zrzur.com behind Cloudflare).
+# Voice (LiveKit) runs on the separate voice server and is not part of this file.
+#
+# Images come only from ghcr.io/zrzur, built by the backend/web "Container images" workflows.
+# Tags are required: missing tags fail closed instead of pulling anything else.
+#   ZRZUR_BACKEND_TAG=sha-<backend commit>  ZRZUR_WEB_TAG=sha-<web commit>
+# Secrets and Revolt.toml live in /etc/zrzur (see production/README.md); none are in this file.
+name: zrzur-main
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+x-backend: &backend
+  <<: *defaults
+  volumes:
+    - /etc/zrzur/Revolt.toml:/Revolt.toml:ro
+  environment:
+    ROCKET_ADDRESS: 0.0.0.0
+  depends_on:
+    database:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    rabbit:
+      condition: service_healthy
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  stop_grace_period: 30s
+
+services:
+  # Data services publish no ports; they are reachable only on the internal Compose network.
+  database:
+    <<: *defaults
+    image: mongo:9.0.4
+    env_file: /etc/zrzur/mongo.env
+    volumes:
+      - database:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "quit(db.adminCommand({ping:1}).ok?0:1)"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+
+  redis:
+    <<: *defaults
+    image: docker.io/valkey/valkey:9.0.2-alpine
+    env_file: /etc/zrzur/redis.env
+    command: ["sh", "-c", "exec valkey-server --appendonly yes --requirepass \"$$VALKEY_PASSWORD\""]
+    volumes:
+      - redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=$$VALKEY_PASSWORD valkey-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  rabbit:
+    <<: *defaults
+    image: rabbitmq:4.4.0
+    env_file: /etc/zrzur/rabbit.env
+    volumes:
+      - rabbit:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+
+  api:
+    <<: *backend
+    image: ghcr.io/zrzur/api:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+    # ZRZUR_INTERNAL_TOKEN=<16+ random characters>: lets discover and designs
+    # render from their own rate-limit bucket (same file for both)
+    env_file: /etc/zrzur/internal.env
+
+  events:
+    <<: *backend
+    image: ghcr.io/zrzur/events:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  autumn:
+    <<: *backend
+    image: ghcr.io/zrzur/autumn:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  january:
+    <<: *backend
+    image: ghcr.io/zrzur/january:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  gifbox:
+    <<: *backend
+    image: ghcr.io/zrzur/gifbox:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  crond:
+    <<: *backend
+    image: ghcr.io/zrzur/crond:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  pushd:
+    <<: *backend
+    image: ghcr.io/zrzur/pushd:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  voice-ingress:
+    <<: *backend
+    image: ghcr.io/zrzur/voice-ingress:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+
+  web:
+    <<: *defaults
+    image: ghcr.io/zrzur/web:${ZRZUR_WEB_TAG:?set ZRZUR_WEB_TAG}
+    environment:
+      VITE_HOST: app.zrzur.com
+      VITE_API_URL: https://api.zrzur.com
+      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
+      VITE_DEV_PROXY_URL: https://api.zrzur.com/january
+      VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
+      # invite and shared links: https://zrzur.cc/{code}
+      VITE_INVITE_ORIGIN: https://zrzur.cc
+      # the public sites, for links from the app
+      VITE_DISCOVER_URL: https://discover.zrzur.com
+      VITE_DESIGNS_HOST: designs.zrzur.com
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  # discover.zrzur.com and designs.zrzur.com: the same web build, served
+  # with each page's own head tags, sitemaps and preview images. They read
+  # the API and files on the internal network.
+  discover: &public-site
+    <<: *defaults
+    image: ghcr.io/zrzur/web:${ZRZUR_WEB_TAG:?set ZRZUR_WEB_TAG}
+    command: ["npm", "run", "discover"]
+    env_file: /etc/zrzur/internal.env
+    environment: &public-site-env
+      VITE_HOST: app.zrzur.com
+      VITE_API_URL: https://api.zrzur.com
+      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
+      VITE_DEV_PROXY_URL: https://api.zrzur.com/january
+      VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
+      VITE_INVITE_ORIGIN: https://zrzur.cc
+      VITE_DISCOVER_URL: https://discover.zrzur.com
+      VITE_DESIGNS_HOST: designs.zrzur.com
+      PUBLIC_ORIGIN: https://discover.zrzur.com
+      API_URL: http://api:14702
+      MEDIA_URL: http://autumn:14704
+      # what visitors' browsers reach (for the page's Content-Security-Policy)
+      PUBLIC_API_URL: https://api.zrzur.com
+      PUBLIC_MEDIA_URL: https://cdn.zrzur.com
+      PORT: "5000"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  designs:
+    <<: *public-site
+    command: ["npm", "run", "designs"]
+    environment:
+      <<: *public-site-env
+      PUBLIC_ORIGIN: https://designs.zrzur.com
+
+  # Zrzur Beta: the beta build of the web app, same backend
+  web-beta:
+    <<: *defaults
+    image: ghcr.io/zrzur/web:${ZRZUR_WEB_BETA_TAG:-beta}
+    environment:
+      VITE_HOST: beta.zrzur.com
+      VITE_API_URL: https://api.zrzur.com
+      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
+      VITE_DEV_PROXY_URL: https://api.zrzur.com/january
+      VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
+      VITE_INVITE_ORIGIN: https://zrzur.cc
+      # the public sites, for links from the app
+      VITE_DISCOVER_URL: https://discover.zrzur.com
+      VITE_DESIGNS_HOST: designs.zrzur.com
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  # Only the proxy publishes ports. Origin access is limited to Cloudflare (see Caddyfile).
+  proxy:
+    <<: *defaults
+    image: caddy:2.11.7-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - /etc/zrzur/caddy:/etc/caddy/zrzur:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      # built static sites: zrzur/website and the admin console (dist folders)
+      - /opt/zrzur/website:/srv/website:ro
+      - /opt/zrzur/admin:/srv/admin:ro
+    depends_on:
+      - api
+      - events
+      - autumn
+      - web
+      - web-beta
+
+volumes:
+  database:
+  redis:
+  rabbit:
+  # Same names as the running TLS bootstrap project (zrzur-main), so issued certificates are kept.
+  caddy_data:
+  caddy_config:

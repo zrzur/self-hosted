@@ -1,0 +1,223 @@
+{
+  "format": 1,
+  "scope": "reviewed-current-source-tree-not-historical-secret-clearance",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "bytes": 19,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "5025ab0d5dfc8f429853c4bedaff033c863dcd08a1a151b6aba741e19bb69088",
+      "bytes": 308,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "d87a588703e9fa721237a3b7b5f83966a33e6f158afc8ad28762168ed401d975",
+      "bytes": 1781,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": ".github/workflows/codeql.yml",
+      "sha256": "2420ebb2303f29c0ea9193ebf72750eb66001b70d37ba8de339896ed91848e6c",
+      "bytes": 618,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": ".github/workflows/source-check.yml",
+      "sha256": "d6faaf6efb4ebe7b69c17ecc56e98a33ddcbd9f30c9725f812db2dbd7046a56a",
+      "bytes": 944,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "4858581e030df503f00f045412bd1e3560be546675a208c5150158c2c31b0c72",
+      "bytes": 572,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "sha256": "d436e8246b2771a5501e3eac30c24d0a2a38f8dc851a06c8e4f8664168162808",
+      "bytes": 4838,
+      "category": "public-documentation"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "6bc7bb97b365a50274709c2fb6dd24a227a2aa7ae72fe26583d47a69687cc067",
+      "bytes": 987,
+      "category": "public-documentation"
+    },
+    {
+      "path": "Caddyfile",
+      "sha256": "1a1ed2b695c68e9493d709d605ca2b0f7a7301205a02f082abb20ccc71c81ec6",
+      "bytes": 2094,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "f5ac1ed6615586adb30cfe5d17d81611eabe74ce92887708c02ce4a477fc032a",
+      "bytes": 34468,
+      "category": "license-and-attribution"
+    },
+    {
+      "path": "MODIFICATIONS.md",
+      "sha256": "3461353cac82d0c66a7e1a7730ce14ca0d87957145fa4a249659ab7407b4ea94",
+      "bytes": 749,
+      "category": "public-documentation"
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "60420359f53a21996cea60b2c7547bceb89a9e543804703a55cd63f0a64de6b5",
+      "bytes": 1033,
+      "category": "license-and-attribution"
+    },
+    {
+      "path": "PUBLICATION_POLICY.md",
+      "sha256": "574896cf57512020bf0cc7118a07319cfe33a8c22fba04c19eddd3be7ddee8d3",
+      "bytes": 1319,
+      "category": "public-documentation"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8760ee79aa00ac64199f83d537415854dce6563db2eb780c4d318ae2543def79",
+      "bytes": 2523,
+      "category": "public-documentation"
+    },
+    {
+      "path": "RELEASE.json",
+      "sha256": "4c2ee9ea30a41168479c675cf73659c429c7f05d473b80adad8c5f8026c27ede",
+      "bytes": 315,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "5e8b6d39a56dd15e2a82a5c5e720ef8dfb267ce110ecefd1ff1f48cee23c896a",
+      "bytes": 535,
+      "category": "public-documentation"
+    },
+    {
+      "path": "THIRD-PARTY-LICENSES.md",
+      "sha256": "d9c1a66d1e60b5c3e970fd1d1cb0df829216b831305a767b15f7c735d2f06162",
+      "bytes": 185,
+      "category": "license-and-attribution"
+    },
+    {
+      "path": "ZRZUR_RELEASE.md",
+      "sha256": "634214fcd13df462e27aa992651b962a4d5fe6de255a39ed2a1f0f02d3379873",
+      "bytes": 1169,
+      "category": "public-documentation"
+    },
+    {
+      "path": "compose.local.yml",
+      "sha256": "72c9af5c8a3014b758dd159192900e32f0d61556576549dcba5e69251789a13d",
+      "bytes": 1231,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "compose.yml",
+      "sha256": "4f0019760158dc76fd73c3c97810d4001103fe34b34d355804cf9964e9c66175",
+      "bytes": 5769,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "generate_config.sh",
+      "sha256": "c7f12226c6ae25727b9e4a903193865a8511605bd2466c4a427a9b771f1cc4cd",
+      "bytes": 12488,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "migrations/.gitignore",
+      "sha256": "a58405a4337dc1903ce126f83a027ee3df2514e9ac1a1a8e33e78bc8fa8cf5da",
+      "bytes": 19,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "migrations/20240929-autumn-rewrite---prod-migration.mjs",
+      "sha256": "1a3d6301a78a166128ab48631a37777d93db1041aba48eab0f55a831d05ea18f",
+      "bytes": 16667,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "migrations/20240929-autumn-rewrite.mjs",
+      "sha256": "f1f13645ea0e9b5c3a6c366d3355200db4a8bec7b2d1efb9404f8debcfc9cd8d",
+      "bytes": 9095,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "migrations/20260218-voice-config.sh",
+      "sha256": "e0860e440869f9555a76dfc61c8c7a801476f641fd9e9709d9fa6a417b9749d0",
+      "bytes": 1686,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/Caddyfile",
+      "sha256": "0730206c6e16eac65a16a6a28077b6942692dd8a06c8aaf842588e08f227d1f7",
+      "bytes": 4347,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/README.md",
+      "sha256": "77d4624a8061acdbdba3f79af54f65dd97a4e549c8d84baf4cee6b3ebc54f8a3",
+      "bytes": 3694,
+      "category": "public-documentation"
+    },
+    {
+      "path": "production/bootstrap-host.sh",
+      "sha256": "30345d5202747fa63eb2a7e4defd37ccae86e5461c52c8d3f7f93d8242d2d5c6",
+      "bytes": 1285,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/compose.yml",
+      "sha256": "2718b544183a79d24d6c65f2dc848985435495a2b0c805ab35fc9d53a908d7f2",
+      "bytes": 6681,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/enter-smtp.py",
+      "sha256": "e575bc717aef7a67c14ed3132e5472a2eb7043cfa7a65620b54a55a78f704d02",
+      "bytes": 962,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/enter-storage.py",
+      "sha256": "76a50ad23d5b8a2c62603825f079d6c5ce52cd3edcc99fdd46efbc2648ede061",
+      "bytes": 1188,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/prepare-config.py",
+      "sha256": "97bfe7d27ac46c287ee289b4bb2d27229afef95cedb870bf2c288ade472d07ac",
+      "bytes": 6523,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/voice/prepare-voice.py",
+      "sha256": "0b330c2fb0eb4c3da24e8bd3df647dec7163f638abb7de31cfb782c0d6fee87c",
+      "bytes": 3052,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "scripts/check-edge.sh",
+      "sha256": "cc31d00363ad6afb592858333d2cd288bd5a10f0476ed9ffd27cff4e532ecfdb",
+      "bytes": 4152,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": "scripts/publication_guard.py",
+      "sha256": "013233534001c5179b26e7cad6b389d3badcddf9cd8fa5ce4d1f79d9cddb9a3e",
+      "bytes": 6663,
+      "category": "reviewed-build-and-ci"
+    },
+    {
+      "path": "secrets.env.example",
+      "sha256": "cada796f07d7df36d08f13a47c5a972fd80eccd48473af3827d19b555d7fbda7",
+      "bytes": 2034,
+      "category": "product-source-or-build-manifest"
+    }
+  ],
+  "submodules": []
+}

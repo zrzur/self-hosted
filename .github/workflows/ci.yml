@@ -1,0 +1,55 @@
+name: CI
+on:
+  push:
+    branches: [main, beta]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    name: Publication guard and secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reviewed public source files
+        run: python3 scripts/publication_guard.py
+      - name: Secrets in the new commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          range="HEAD~1..HEAD"
+          if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then range="$BASE..HEAD"; fi
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.21.2 \
+            git /repo --log-opts="$range" --redact --no-banner
+
+  compose:
+    name: Compose files are valid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Development and production compose files
+        run: |
+          # empty stand-ins for the files generate_config.sh and the server provide
+          touch secrets.env .env.web
+          sudo mkdir -p /etc/zrzur && sudo touch /etc/zrzur/mongo.env /etc/zrzur/rabbit.env /etc/zrzur/redis.env /etc/zrzur/internal.env
+          docker compose -f compose.yml config --quiet
+          ZRZUR_BACKEND_TAG=ci ZRZUR_WEB_TAG=ci docker compose -f production/compose.yml config --quiet
+
+  edge:
+    name: Edge rules answer as written
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: bash scripts/check-edge.sh

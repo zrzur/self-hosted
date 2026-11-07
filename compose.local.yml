@@ -1,0 +1,53 @@
+# Zrzur local overlay: data plane only (MongoDB, Valkey, RabbitMQ, MinIO, createbuckets).
+#
+#   docker compose -f compose.yml -f compose.local.yml up -d
+#
+# Application services and Caddy sit behind profile `app` and do not start by default.
+# Start them too with:  docker compose -f compose.yml -f compose.local.yml --profile app up -d
+
+name: zrzur-local
+
+services:
+  minio:
+    networks:
+      default:
+        aliases:
+          - zrzur-uploads.minio
+          - revolt-uploads.minio
+
+  # --- App images + edge: disabled unless started with --profile app ---
+  caddy:
+    profiles: ["app"]
+    networks:
+      default:
+        aliases:
+          - "${ZRZUR_DOMAIN:-localhost}"
+  api:
+    profiles: ["app"]
+    labels:
+      - "org.zrzur.component=api"
+      - "org.zrzur.policy=data-plane-only"
+  events:
+    profiles: ["app"]
+    labels:
+      - "org.zrzur.component=events"
+  autumn:
+    profiles: ["app"]
+    labels:
+      - "org.zrzur.component=cdn"
+  january:
+    profiles: ["app"]
+  gifbox:
+    profiles: ["app"]
+  crond:
+    profiles: ["app"]
+  pushd:
+    profiles: ["app"]
+  voice-ingress:
+    profiles: ["app"]
+  livekit:
+    profiles: ["app"]
+  web:
+    profiles: ["app"]
+    labels:
+      - "org.zrzur.component=web"
