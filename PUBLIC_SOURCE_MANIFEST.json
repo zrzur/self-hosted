@@ -154,8 +154,8 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "4285e6f5319a843b629cdb3f2000323ade8b78979cd997df92f5c05055c8b30c",
-      "bytes": 4300,
+      "sha256": "c0bfa23a13b5e3abb026c94156daf3053771f26ec0c6d235e280f496a289b858",
+      "bytes": 4796,
       "category": "product-source-or-build-manifest"
     },
     {
