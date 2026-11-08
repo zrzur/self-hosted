@@ -11,6 +11,7 @@ Runs zrzur.com (website), app.zrzur.com (Zrzur), beta.zrzur.com (Zrzur Beta), ap
 | `bootstrap-host.sh` | Fresh-host preparation: 4 GB swap, Docker, clone of this repository. Builds and starts nothing. |
 | `enter-storage.py` | Hidden console input for the S3 key, saved to `/etc/zrzur/storage.json` (mode 600). |
 | `enter-smtp.py` | Hidden console input for the Resend API key, saved to `/etc/zrzur/smtp.json` (mode 600). |
+| `enter-captcha.py` | Console input for the hCaptcha site key and hidden secret, saved to `/etc/zrzur/captcha.json` (mode 600). |
 | `prepare-config.py` | Generates `/etc/zrzur/Revolt.toml`, the data-service env files and the Cloudflare range files. Prints no secrets and starts nothing. |
 
 Secrets are never stored in this repository, in shell history or in chat.
@@ -34,6 +35,10 @@ Registration is invite-only.
 ## Email (Resend)
 
 Email is off until a sending key exists: no verification or password-reset mail is sent. To enable it, verify `zrzur.com` in Resend (its SPF/DKIM DNS records in Cloudflare), then on main run `python3 enter-smtp.py` (hidden input for the `re_...` key), remove `/etc/zrzur/Revolt.toml`, run `python3 prepare-config.py` and `docker compose up -d --force-recreate api`. Sender: `Zrzur <no-reply@zrzur.com>` via `smtp.resend.com:465`. With email on, new accounts must verify their address.
+
+## Sign-up and captcha
+
+Sign-up is open: anyone can create an account without an invite code (`invite_only = false`). Before opening it on a public server, turn on email (above) so addresses are verified and passwords can be reset, and add hCaptcha: run `python3 enter-captcha.py`, remove `/etc/zrzur/Revolt.toml`, run `python3 prepare-config.py` and `docker compose up -d --force-recreate api`. Without a captcha key, sign-up has only the per-address rate limit.
 
 `prepare-config.py` also writes `/etc/zrzur/internal.env` (`ZRZUR_INTERNAL_TOKEN`, mode 600). The api, discover and designs services read it: the two public sites send the token to the API so their server-side rendering has its own rate-limit bucket. Existing installs get the token on the next run of `prepare-config.py`; then recreate the api, discover and designs containers.
 

@@ -101,6 +101,11 @@ def main():
                       f'password = {q(smtp["password"])}\nfrom_address = {q(smtp["from_address"])}')
     else:
         smtp_block = 'host = ""\nfrom_address = "no-reply@zrzur.com"'
+    # hCaptcha on sign-up, login and password reset once enter-captcha.py has stored the keys
+    captcha_path = DIRECTORY / 'captcha.json'
+    captcha = json.loads(captcha_path.read_text()) if captcha_path.exists() else None
+    captcha_block = (f'[api.security.captcha]\nhcaptcha_key = {q(captcha["secret"])}\n'
+                     f'hcaptcha_sitekey = {q(captcha["sitekey"])}\n' if captcha else '')
     configuration = f'''production = true
 environment = "staging"
 [database]
@@ -122,14 +127,15 @@ port = 5672
 username = "zrzur"
 password = "{values['rabbit']}"
 [api.registration]
-invite_only = true
+# open sign-up (owner, 2026-11-08): no invite code needed
+invite_only = false
 [api.smtp]
 {smtp_block}
 [api.security]
 trust_cloudflare = true
 easypwned = ""
 staff_origins = ["http://localhost:8090"]
-[api.livekit.nodes.fra]
+{captcha_block}[api.livekit.nodes.fra]
 url = "https://voice.zrzur.com"
 lat = 50.11
 lon = 8.68
