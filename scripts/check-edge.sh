@@ -77,12 +77,12 @@ production)
   up /w/production.caddy
   for p in /metrics /metrics/x /METRICS //metrics /./metrics; do expect 404 api.zrzur.com "$p"; done
   for p in /ok /january/x /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
-  for h in app beta discover designs ws cdn; do expect 200 "$h.zrzur.com" /; done
+  for h in app beta discover designs events cdn; do expect 200 "$h.zrzur.com" /; done
   down
   for f in /w/zrzur/*; do sed "s#RANGES#203.0.113.0/24#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy
   for p in /ok /metrics /january/x /gifbox/x /ingress/x; do expect 403 api.zrzur.com "$p"; done
-  for h in app.zrzur.com beta.zrzur.com discover.zrzur.com designs.zrzur.com admin.zrzur.com ws.zrzur.com cdn.zrzur.com zrzur.com status.zrzur.com; do expect 403 "$h" /; done
+  for h in app.zrzur.com beta.zrzur.com discover.zrzur.com designs.zrzur.com events.zrzur.com cdn.zrzur.com zrzur.com status.zrzur.com; do expect 403 "$h" /; done
   ;;
 esac
 exit "$failed"

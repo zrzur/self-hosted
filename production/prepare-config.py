@@ -101,7 +101,7 @@ redis = "redis://:{values['redis']}@redis:6379/"
 [hosts]
 app = "https://app.zrzur.com"
 api = "https://api.zrzur.com"
-events = "wss://ws.zrzur.com"
+events = "wss://events.zrzur.com"
 autumn = "https://cdn.zrzur.com"
 january = "http://january:14705"
 january_public = "https://api.zrzur.com/january"
@@ -120,7 +120,7 @@ invite_only = true
 [api.security]
 trust_cloudflare = true
 easypwned = ""
-staff_origins = ["https://admin.zrzur.com"]
+staff_origins = ["http://localhost:8090"]
 [api.livekit.nodes.fra]
 url = "https://voice.zrzur.com"
 lat = 50.11

@@ -52,14 +52,13 @@ designs.zrzur.com {
 #   @outside not remote_ip <addresses>
 #   respond @outside 403
 # and import it here.
-admin.zrzur.com {
-	import /etc/caddy/zrzur/cloudflare-only.caddy
+# Reached only through an SSH tunnel: the port is published on 127.0.0.1.
+http://:8090 {
 	header {
 		Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https://api.zrzur.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 		X-Frame-Options DENY
 		X-Content-Type-Options nosniff
 		Referrer-Policy no-referrer
-		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 		Cache-Control no-store
 		-Server
@@ -91,7 +90,7 @@ api.zrzur.com {
 	}
 }
 
-ws.zrzur.com {
+events.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	reverse_proxy events:14703
 }

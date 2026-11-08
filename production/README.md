@@ -1,6 +1,6 @@
 # Zrzur main-server production stack
 
-Runs zrzur.com (website), app.zrzur.com (Zrzur), beta.zrzur.com (Zrzur Beta), admin.zrzur.com (team console) and api/ws/cdn.zrzur.com on the main server behind Cloudflare. Stable and Beta use the same backend. Voice (LiveKit) runs on the separate voice server. Nothing here is built on the server: images are built by the `Container images` workflows of [zrzur/backend](https://github.com/zrzur/backend) and [zrzur/web](https://github.com/zrzur/web) and pulled from `ghcr.io/zrzur`.
+Runs zrzur.com (website), app.zrzur.com (Zrzur), beta.zrzur.com (Zrzur Beta), api/events/cdn.zrzur.com, and the team console on 127.0.0.1:8090 (SSH tunnel only, no public hostname) on the main server behind Cloudflare. Stable and Beta use the same backend. Voice (LiveKit) runs on the separate voice server. Nothing here is built on the server: images are built by the `Container images` workflows of [zrzur/backend](https://github.com/zrzur/backend) and [zrzur/web](https://github.com/zrzur/web) and pulled from `ghcr.io/zrzur`.
 
 ## Files
 
@@ -36,3 +36,13 @@ Registration is invite-only.
 Email is off until a sending key exists: no verification or password-reset mail is sent. To enable it, verify `zrzur.com` in Resend (its SPF/DKIM DNS records in Cloudflare), then on main run `python3 enter-smtp.py` (hidden input for the `re_...` key), remove `/etc/zrzur/Revolt.toml`, run `python3 prepare-config.py` and `docker compose up -d --force-recreate api`. Sender: `Zrzur <no-reply@zrzur.com>` via `smtp.resend.com:465`. With email on, new accounts must verify their address.
 
 `prepare-config.py` also writes `/etc/zrzur/internal.env` (`ZRZUR_INTERNAL_TOKEN`, mode 600). The api, discover and designs services read it: the two public sites send the token to the API so their server-side rendering has its own rate-limit bucket. Existing installs get the token on the next run of `prepare-config.py`; then recreate the api, discover and designs containers.
+
+## Team console (admin)
+
+The console has no public hostname. The proxy serves it on `127.0.0.1:8090` of the main server only, and the API accepts staff requests from `http://localhost:8090`. Open it through an SSH tunnel:
+
+```
+ssh -N -L 8090:127.0.0.1:8090 zrzur@<main server>
+```
+
+then browse to `http://localhost:8090`. Close the tunnel with Ctrl+C.

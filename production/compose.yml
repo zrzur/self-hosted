@@ -114,7 +114,7 @@ services:
     environment:
       VITE_HOST: app.zrzur.com
       VITE_API_URL: https://api.zrzur.com
-      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_WS_URL: wss://events.zrzur.com
       VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
       VITE_DEV_PROXY_URL: https://api.zrzur.com/january
       VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
@@ -139,7 +139,7 @@ services:
     environment: &public-site-env
       VITE_HOST: app.zrzur.com
       VITE_API_URL: https://api.zrzur.com
-      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_WS_URL: wss://events.zrzur.com
       VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
       VITE_DEV_PROXY_URL: https://api.zrzur.com/january
       VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
@@ -172,7 +172,7 @@ services:
     environment:
       VITE_HOST: beta.zrzur.com
       VITE_API_URL: https://api.zrzur.com
-      VITE_DEV_WS_URL: wss://ws.zrzur.com
+      VITE_DEV_WS_URL: wss://events.zrzur.com
       VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
       VITE_DEV_PROXY_URL: https://api.zrzur.com/january
       VITE_DEV_GIFBOX_URL: https://api.zrzur.com/gifbox
@@ -192,6 +192,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      # admin console: SSH tunnel only (ssh -L 8090:127.0.0.1:8090)
+      - "127.0.0.1:8090:8090"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - /etc/zrzur/caddy:/etc/caddy/zrzur:ro
