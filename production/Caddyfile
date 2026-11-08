@@ -111,8 +111,18 @@ zrzur.com {
 		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 		-Server
 	}
-	@assets path /assets/* /brand/*
-	header @assets Cache-Control "public, max-age=31536000, immutable"
+	# Files Vite emitted carry a hash in their name: kept for a year. Files with
+	# stable names (product pictures, brand) may be replaced: an hour. Pages are
+	# always checked, so a new release reaches every visitor on the next visit.
+	@hashed path_regexp ^/assets/[^/]+-[A-Za-z0-9_-]{8}\.[a-z0-9]+$
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+	@stable {
+		path /assets/* /brand/*
+		not path_regexp ^/assets/[^/]+-[A-Za-z0-9_-]{8}\.[a-z0-9]+$
+	}
+	header @stable Cache-Control "public, max-age=3600"
+	@pages not path /assets/* /brand/*
+	header @pages Cache-Control "no-cache"
 	root * /srv/website
 	try_files {path} {path}.html {path}/index.html /index.html
 	file_server
