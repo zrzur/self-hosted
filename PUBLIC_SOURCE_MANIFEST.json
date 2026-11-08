@@ -160,8 +160,8 @@
     },
     {
       "path": "production/README.md",
-      "sha256": "f9260456595694116af7f3d8d052453691b47c3d8e589ad93955ca609ff2b2c0",
-      "bytes": 4094,
+      "sha256": "2c8be8722a1fcf9cdd525832403587fcc25c5642eb9ac8b387eb9368809f6a84",
+      "bytes": 4690,
       "category": "public-documentation"
     },
     {
@@ -174,6 +174,12 @@
       "path": "production/compose.yml",
       "sha256": "b486ba12485f44b4530fce5a2c2882a41198f31c4fb9cd3121359b9fccaeedea",
       "bytes": 6791,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/enter-captcha.py",
+      "sha256": "5e8b7777cbb51123a9bd0412d0ed4228207c28fa7a4d2eaccf1fc6fee4f5de1a",
+      "bytes": 901,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -190,8 +196,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "6755106a5c2bf324f3eb36206d6e0495447e2330020ffb1f23d13d14b183d7c5",
-      "bytes": 6881,
+      "sha256": "b5d235ecc91208bf515dceeb9ceb5ee0083a0dc74a585d662033a538c8690d8b",
+      "bytes": 7358,
       "category": "product-source-or-build-manifest"
     },
     {
