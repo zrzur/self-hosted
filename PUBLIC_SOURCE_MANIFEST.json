@@ -154,14 +154,14 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "0730206c6e16eac65a16a6a28077b6942692dd8a06c8aaf842588e08f227d1f7",
-      "bytes": 4347,
+      "sha256": "4285e6f5319a843b629cdb3f2000323ade8b78979cd997df92f5c05055c8b30c",
+      "bytes": 4300,
       "category": "product-source-or-build-manifest"
     },
     {
       "path": "production/README.md",
-      "sha256": "77d4624a8061acdbdba3f79af54f65dd97a4e549c8d84baf4cee6b3ebc54f8a3",
-      "bytes": 3694,
+      "sha256": "f9260456595694116af7f3d8d052453691b47c3d8e589ad93955ca609ff2b2c0",
+      "bytes": 4094,
       "category": "public-documentation"
     },
     {
@@ -172,8 +172,8 @@
     },
     {
       "path": "production/compose.yml",
-      "sha256": "2718b544183a79d24d6c65f2dc848985435495a2b0c805ab35fc9d53a908d7f2",
-      "bytes": 6681,
+      "sha256": "b486ba12485f44b4530fce5a2c2882a41198f31c4fb9cd3121359b9fccaeedea",
+      "bytes": 6791,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -190,8 +190,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "97bfe7d27ac46c287ee289b4bb2d27229afef95cedb870bf2c288ade472d07ac",
-      "bytes": 6523,
+      "sha256": "55511b4afd4a52af0df630f3d302a9c98c928c24b1ac65ad766a5a6369f00a79",
+      "bytes": 6525,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -202,8 +202,8 @@
     },
     {
       "path": "scripts/check-edge.sh",
-      "sha256": "cc31d00363ad6afb592858333d2cd288bd5a10f0476ed9ffd27cff4e532ecfdb",
-      "bytes": 4152,
+      "sha256": "8a734edc9fe5e7ffc96a4f3104400f86e8d441a6205da149748bd9d3f6f65622",
+      "bytes": 4144,
       "category": "reviewed-build-and-ci"
     },
     {
