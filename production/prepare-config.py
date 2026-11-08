@@ -58,9 +58,17 @@ def application_secrets():
         with os.fdopen(fd, 'w') as stream:
             json.dump(values, stream)
     values = json.loads(path.read_text())
+    added = False
     if 'internal' not in values:
         # added later: the secret the public sites send the API (rate-limit bucket)
         values['internal'] = secrets.token_hex(32)
+        added = True
+    if 'proxy' not in values:
+        # added later: signs media proxy tickets; without it the API refuses
+        # POST /auth/session/proxy_ticket (FeatureDisabled) and proxied media fails
+        values['proxy'] = secrets.token_hex(32)
+        added = True
+    if added:
         path.write_text(json.dumps(values))
     return values
 
@@ -127,6 +135,8 @@ lat = 50.11
 lon = 8.68
 key = {q(voice['key'])}
 secret = {q(voice['secret'])}
+[january]
+proxy_key = {q(values['proxy'])}
 [files]
 encryption_key = {q(values['encryption'])}
 [files.preview]
