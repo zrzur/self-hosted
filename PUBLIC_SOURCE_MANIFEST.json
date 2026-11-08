@@ -190,8 +190,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "55511b4afd4a52af0df630f3d302a9c98c928c24b1ac65ad766a5a6369f00a79",
-      "bytes": 6525,
+      "sha256": "6755106a5c2bf324f3eb36206d6e0495447e2330020ffb1f23d13d14b183d7c5",
+      "bytes": 6881,
       "category": "product-source-or-build-manifest"
     },
     {
