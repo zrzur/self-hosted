@@ -77,7 +77,7 @@ production)
   up /w/production.caddy
   for p in /metrics /metrics/x /METRICS //metrics /./metrics; do expect 404 api.zrzur.com "$p"; done
   for p in /ok /january/x /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
-  for h in app beta discover designs events cdn; do expect 200 "$h.zrzur.com" /; done
+  for h in app beta discover designs events ws cdn; do expect 200 "$h.zrzur.com" /; done
   down
   for f in /w/zrzur/*; do sed "s#RANGES#203.0.113.0/24#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy
