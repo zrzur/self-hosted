@@ -208,8 +208,8 @@
     },
     {
       "path": "scripts/check-edge.sh",
-      "sha256": "5e4454bd3f5a0a32f78c78e8cf88674f1456bc88bd08f5560a0c3374fcf1aa0f",
-      "bytes": 4157,
+      "sha256": "7c81d15cf7e80a7f801f6e5080cfce41e2f8b03a205de1f39875c56ff987e8ed",
+      "bytes": 4160,
       "category": "reviewed-build-and-ci"
     },
     {
