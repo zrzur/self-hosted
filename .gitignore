@@ -54,3 +54,6 @@ test-results/
 playwright-report/
 coverage/
 *.har
+
+# Python caches (check-edge.sh imports prepare-config.py)
+__pycache__/

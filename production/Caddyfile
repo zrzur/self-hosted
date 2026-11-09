@@ -95,6 +95,12 @@ events.zrzur.com {
 	reverse_proxy events:14703
 }
 
+# the same gateway under its short name (owner, 2026-11-09)
+ws.zrzur.com {
+	import /etc/caddy/zrzur/cloudflare-only.caddy
+	reverse_proxy events:14703
+}
+
 cdn.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	reverse_proxy autumn:14704
