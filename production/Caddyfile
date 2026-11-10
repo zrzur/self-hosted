@@ -10,14 +10,29 @@
 	}
 }
 
+# Every public site: HTTPS only from now on (browsers remember it for two
+# years), no type guessing, short referrers, no server name. Pages set
+# their own Content-Security-Policy (web: docker/server.js, built from the
+# instance's addresses; Discover/Designs: public-pages; zrzur.com: below).
+(security-headers) {
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
+
 app.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	reverse_proxy web:5000
 }
 
 # Zrzur Beta: the beta web app, on the same backend as app.zrzur.com
 beta.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	reverse_proxy web-beta:5000
 }
 
@@ -70,6 +85,7 @@ http://:8090 {
 
 api.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	# internal numbers stay inside; the console reads /staff/operations/metrics.
 	# In a handle block: Caddy runs handle before a bare respond.
 	@internal path /metrics /metrics/*
@@ -92,17 +108,20 @@ api.zrzur.com {
 
 events.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	reverse_proxy events:14703
 }
 
 # the same gateway under its short name (owner, 2026-11-09)
 ws.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	reverse_proxy events:14703
 }
 
 cdn.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	reverse_proxy autumn:14704
 }
 
@@ -111,11 +130,15 @@ zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	@source path /source /source/*
 	redir @source https://github.com/zrzur 302
+	import security-headers
+	# A static site: scripts only from itself (the theme script is a file,
+	# /theme.js), the report form talks to the API and hCaptcha, nothing
+	# frames it. Styles keep 'unsafe-inline' for style attributes in the
+	# prerendered pages and hCaptcha's widget.
 	header {
-		X-Content-Type-Options nosniff
-		Referrer-Policy strict-origin-when-cross-origin
-		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-		-Server
+		Content-Security-Policy "default-src 'self'; script-src 'self' https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zrzur.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://hcaptcha.com https://*.hcaptcha.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+		X-Frame-Options DENY
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
 	}
 	# Files Vite emitted carry a hash in their name: kept for a year. Files with
 	# stable names (product pictures, brand) may be replaced: an hour. Pages are
@@ -136,11 +159,13 @@ zrzur.com {
 
 www.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	redir https://zrzur.com{uri} 308
 }
 
 status.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	header Cache-Control "no-store"
 	respond "Zrzur release acceptance is incomplete." 503
 }
@@ -150,6 +175,7 @@ status.zrzur.com {
 # join words with single hyphens. Path /p/{id} reserved for future content shares.
 zrzur.cc {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
 	@invite path_regexp invite ^/([A-Za-z0-9]+(?:-[A-Za-z0-9]+)*)$
 	redir @invite https://app.zrzur.com/invite/{re.invite.1} 302
 	@share path_regexp share ^/p/([A-Za-z0-9_-]+)$

@@ -40,6 +40,22 @@ expect() { # want host path
   if [ "$got" = "$1" ]; then echo "ok   $got $2$3"; else echo "FAIL $got (want $1) $2$3"; failed=1; fi
 }
 body() { wget -qO- --header "Host: x" ${1:+--header "$1"} "http://$ip/api/ok"; }
+header() { # host name: the header's value (any answer, error pages too)
+  wget -S -qO /dev/null --header "Host: $1" "http://$ip/" 2>&1 |
+    awk -v name="$2" 'tolower($1) == tolower(name) ":" { $1 = ""; sub(/^ /, ""); print; exit }'
+}
+expect_header() { # host name text: the header holds the text
+  got="$(header "$1" "$2")"
+  case "$got" in *"$3"*) echo "ok   $1 $2: $3" ;; *) echo "FAIL $1 $2 lacks $3 (got: $got)"; failed=1 ;; esac
+}
+expect_script_policy() { # host: script-src 'self' without inline or eval
+  got="$(header "$1" content-security-policy | sed -n "s/.*script-src \([^;]*\).*/\1/p")"
+  case "$got" in
+    *unsafe-inline*|*unsafe-eval*) echo "FAIL $1 script-src too wide: $got"; failed=1 ;;
+    *"'self'"*) echo "ok   $1 script-src $got" ;;
+    *) echo "FAIL $1 has no script-src 'self' (got: $got)"; failed=1 ;;
+  esac
+}
 expect_body() { # want header
   got="$(body "$2")"
   if [ "$got" = "$1" ]; then echo "ok   $got"; else echo "FAIL $got (want $1)"; failed=1; fi
@@ -72,12 +88,27 @@ quickstart-proxied)
   expect_body "xff=7.7.7.7" "X-Forwarded-For: 6.6.6.6, 7.7.7.7"
   ;;
 production)
+  # a stand-in website, so zrzur.com answers 200 with its headers
+  mkdir -p /srv/website && echo ok > /srv/website/index.html
   mkdir -p /etc/caddy/zrzur
   for f in /w/zrzur/*; do sed "s#RANGES#$ip/32#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy
   for p in /metrics /metrics/x /METRICS //metrics /./metrics; do expect 404 api.zrzur.com "$p"; done
   for p in /ok /january/x /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
   for h in app beta discover designs events ws cdn; do expect 200 "$h.zrzur.com" /; done
+  # HTTPS only and no type guessing on every public site that answers 200
+  # here (busybox wget shows no headers of redirects and errors, so www,
+  # status and zrzur.cc are not read; they import the same snippet)
+  for h in zrzur.com app.zrzur.com beta.zrzur.com api.zrzur.com events.zrzur.com ws.zrzur.com cdn.zrzur.com discover.zrzur.com designs.zrzur.com; do
+    expect_header "$h" strict-transport-security "max-age=63072000"
+    expect_header "$h" x-content-type-options nosniff
+  done
+  # the website's own page policy
+  expect_script_policy zrzur.com
+  expect_header zrzur.com content-security-policy "frame-ancestors 'none'"
+  expect_header zrzur.com content-security-policy "object-src 'none'"
+  expect_header zrzur.com referrer-policy strict-origin-when-cross-origin
+  expect_header zrzur.com permissions-policy "camera=()"
   down
   for f in /w/zrzur/*; do sed "s#RANGES#203.0.113.0/24#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy

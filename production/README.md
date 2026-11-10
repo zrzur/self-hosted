@@ -40,6 +40,12 @@ Email is off until a sending key exists: no verification or password-reset mail 
 
 Sign-up is open: anyone can create an account without an invite code (`invite_only = false`). Before opening it on a public server, turn on email (above) so addresses are verified and passwords can be reset, and add hCaptcha: run `python3 enter-captcha.py`, remove `/etc/zrzur/Revolt.toml`, run `python3 prepare-config.py` and `docker compose up -d --force-recreate api`. Without a captcha key, sign-up has only the per-address rate limit.
 
+With the captcha on, sign-in asks for it too, but only for an address that had ten wrong passwords within fifteen minutes; without it, such an address waits instead (one minute, doubling up to an hour), which anyone who knows the address can cause. The captcha removes that wait.
+
+## Security headers
+
+Every public site gets HSTS, `nosniff`, a strict referrer and no `Server` header (the `security-headers` snippet in `Caddyfile`). The web app sets its own Content-Security-Policy (`docker/server.js` in the web image), built from the container's `VITE_*` addresses and the API root (files, link proxy, events, voice nodes), read again every ten minutes. Optional variables on the `web` / `web-beta` services: `CSP_API_URL` (where the container reaches the API, if not `VITE_API_URL`), `CSP_CONNECT_EXTRA`, `CSP_FRAME_EXTRA`, `CSP_IMG_EXTRA` (space-separated origins). The website's policy is in its `zrzur.com` block. `scripts/check-edge.sh` checks the headers in a throwaway Caddy.
+
 `prepare-config.py` also writes `/etc/zrzur/internal.env` (`ZRZUR_INTERNAL_TOKEN`, mode 600). The api, discover and designs services read it: the two public sites send the token to the API so their server-side rendering has its own rate-limit bucket. Existing installs get the token on the next run of `prepare-config.py`; then recreate the api, discover and designs containers.
 
 ## Team console (admin)
