@@ -44,7 +44,7 @@ beta.zrzur.com {
 		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 		X-Content-Type-Options nosniff
 		Referrer-Policy strict-origin-when-cross-origin
-		Permissions-Policy "geolocation=(), payment=(), interest-cohort=()"
+		Permissions-Policy "geolocation=(), payment=()"
 		-Server
 	}
 	encode zstd gzip
@@ -138,7 +138,7 @@ zrzur.com {
 	header {
 		Content-Security-Policy "default-src 'self'; script-src 'self' https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zrzur.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://hcaptcha.com https://*.hcaptcha.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 		X-Frame-Options DENY
-		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 	}
 	# Files Vite emitted carry a hash in their name: kept for a year. Files with
 	# stable names (product pictures, brand) may be replaced: an hour. Pages are

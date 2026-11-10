@@ -10,8 +10,17 @@ export MSYS_NO_PATHCONV=1
 native() { (cd "$1" && { pwd -W 2>/dev/null || pwd; }); }
 root="$(native "$(dirname "$0")/..")"
 image="$(sed -n 's/^ *image: \(docker.io\/\)\{0,1\}\(caddy:.*\)$/\2/p' "$root/compose.yml" | head -1)"
-work="$(native "$(mktemp -d)")"
-trap 'rm -rf "$work"' EXIT
+tmpbase="$(native "${TMPDIR:-/tmp}")"
+work="$(native "$(mktemp -d "${TMPDIR:-/tmp}/tmp.XXXXXXXXXX")")"
+# remove only what mktemp -d just made (tmp.XXXXXXXXXX right inside the
+# temporary folder), never an empty path, / or anything else
+cleanup() {
+  case "$work" in
+    "$tmpbase"/tmp.??????????) rm -rf -- "$work" ;;
+    *) echo "check-edge: left '$work' in place (not a folder mktemp made)" >&2 ;;
+  esac
+}
+trap cleanup EXIT
 
 mkdir "$work/zrzur"
 # the rule files as prepare-config.py writes them, with a placeholder for the ranges

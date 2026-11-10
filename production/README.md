@@ -40,7 +40,15 @@ Email is off until a sending key exists: no verification or password-reset mail 
 
 Sign-up is open: anyone can create an account without an invite code (`invite_only = false`). Before opening it on a public server, turn on email (above) so addresses are verified and passwords can be reset, and add hCaptcha: run `python3 enter-captcha.py`, remove `/etc/zrzur/Revolt.toml`, run `python3 prepare-config.py` and `docker compose up -d --force-recreate api`. Without a captcha key, sign-up has only the per-address rate limit.
 
-With the captcha on, sign-in asks for it too, but only for an address that had ten wrong passwords within fifteen minutes; without it, such an address waits instead (one minute, doubling up to an hour), which anyone who knows the address can cause. The captcha removes that wait.
+With the captcha on, sign-in asks for it too, but only for an address that had ten wrong passwords within fifteen minutes. Without it, such an address waits instead (one minute, doubling up to an hour), but only on the network the wrong passwords came from (IPv4 /24, IPv6 /64); a password reset ends the wait. The captcha removes the wait altogether.
+
+## Deploy order (security hardening)
+
+Some pieces depend on each other. Deploy them in this order:
+
+1. **API, then web, before the captcha key.** Deploy the API with the sign-in step-up and the web image whose login form runs the captcha when asked (`app.zrzur.com` and `beta.zrzur.com`). Only then run `enter-captcha.py` and recreate the api: an older web app shown a `CaptchaFailed` answer on sign-in has no way to solve it.
+2. **The website before this Caddyfile.** Publish the zrzur.com build that loads `/theme.js` first, then reload Caddy with the new `zrzur.com` block. The older pages have an inline theme script that the new page policy refuses (the page would still work, but Arabic pages would get their right-to-left direction only once the site's script runs).
+3. **The web image's environment.** The `web` and `web-beta` services need `CSP_API_URL: http://api:14702` (the page policy reads the API root on the internal network for the voice nodes, files and link proxy) and may name the voice host with `CSP_VOICE: wss://voice.zrzur.com` for the time before the first read. Without them the web server reads the public API address and retries every 15 to 30 seconds until it answers.
 
 ## Security headers
 
