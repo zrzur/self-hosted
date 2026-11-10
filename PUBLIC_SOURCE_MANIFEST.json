@@ -154,14 +154,14 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "bb08756e7483d6edafdd2d9628190d45b24d6a8c9d19a65486001370ed320654",
-      "bytes": 4949,
+      "sha256": "ad5ebe0f6686885bb8ce5bbe57b2bd3024e754054651d80a8b933bf8318753eb",
+      "bytes": 6383,
       "category": "product-source-or-build-manifest"
     },
     {
       "path": "production/README.md",
-      "sha256": "2c8be8722a1fcf9cdd525832403587fcc25c5642eb9ac8b387eb9368809f6a84",
-      "bytes": 4690,
+      "sha256": "4ca761a3f9bacbc35ac1a09c64a87db9c9692a5491ecf2654b4a8485c20dae21",
+      "bytes": 5675,
       "category": "public-documentation"
     },
     {
@@ -208,8 +208,8 @@
     },
     {
       "path": "scripts/check-edge.sh",
-      "sha256": "7c81d15cf7e80a7f801f6e5080cfce41e2f8b03a205de1f39875c56ff987e8ed",
-      "bytes": 4160,
+      "sha256": "995c5f7798736e4ffe40f0ed2f78de6a06b23182dba9a5e568cc3e7c1530d1a2",
+      "bytes": 5962,
       "category": "reviewed-build-and-ci"
     },
     {
