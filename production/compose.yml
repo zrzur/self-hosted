@@ -114,6 +114,9 @@ services:
     environment:
       VITE_HOST: app.zrzur.com
       VITE_API_URL: https://api.zrzur.com
+      # CSP: read the API root inside the network (no Cloudflare hairpin); voice hosts until the first read
+      CSP_API_URL: http://api:14702
+      CSP_VOICE: wss://voice.zrzur.com
       VITE_DEV_WS_URL: wss://events.zrzur.com
       VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
       VITE_DEV_PROXY_URL: https://api.zrzur.com/january
@@ -172,6 +175,9 @@ services:
     environment:
       VITE_HOST: beta.zrzur.com
       VITE_API_URL: https://api.zrzur.com
+      # CSP: read the API root inside the network (no Cloudflare hairpin); voice hosts until the first read
+      CSP_API_URL: http://api:14702
+      CSP_VOICE: wss://voice.zrzur.com
       VITE_DEV_WS_URL: wss://events.zrzur.com
       VITE_DEV_MEDIA_URL: https://cdn.zrzur.com
       VITE_DEV_PROXY_URL: https://api.zrzur.com/january
