@@ -153,8 +153,20 @@ zrzur.com {
 	@pages not path /assets/* /brand/*
 	header @pages Cache-Control "no-cache"
 	root * /srv/website
-	try_files {path} {path}.html {path}/index.html /index.html
+	# Every page is prerendered, so an address with no file is a real 404:
+	# no fallback to the home page (that answered 200, a soft 404).
+	try_files {path} {path}.html {path}/index.html
 	file_server
+	# The prerendered "page not found" in the address's language, with status 404
+	handle_errors 404 {
+		header Cache-Control "no-cache"
+		route {
+			@lang path_regexp lang ^/(ar|de|fr|es|ru|zh)(/|$)
+			rewrite @lang /{re.lang.1}/404.html
+			rewrite * /404.html
+		}
+		file_server
+	}
 }
 
 www.zrzur.com {
