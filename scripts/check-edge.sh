@@ -103,7 +103,9 @@ production)
   for f in /w/zrzur/*; do sed "s#RANGES#$ip/32#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy
   for p in /metrics /metrics/x /METRICS //metrics /./metrics; do expect 404 api.zrzur.com "$p"; done
-  for p in /ok /january/x /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
+  for p in /ok /january/proxy /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
+  # only January's media proxy is public (C2); /embed and the rest stay closed
+  for p in /january/x /january/embed; do expect 404 api.zrzur.com "$p"; done
   for h in app beta discover designs events ws cdn; do expect 200 "$h.zrzur.com" /; done
   # HTTPS only and no type guessing on every public site that answers 200
   # here (busybox wget shows no headers of redirects and errors, so www,
@@ -112,6 +114,8 @@ production)
     expect_header "$h" strict-transport-security "max-age=63072000"
     expect_header "$h" x-content-type-options nosniff
   done
+  # the app is not for search engines; the public sites are
+  for h in app.zrzur.com beta.zrzur.com; do expect_header "$h" x-robots-tag noindex; done
   # the website's own page policy
   expect_script_policy zrzur.com
   expect_header zrzur.com content-security-policy "frame-ancestors 'none'"

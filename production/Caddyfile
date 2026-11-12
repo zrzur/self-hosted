@@ -26,6 +26,9 @@
 app.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	import security-headers
+	# the app is for signed-in people; search engines list zrzur.com,
+	# Discover and Designs instead (link previews still work)
+	header X-Robots-Tag "noindex, nofollow"
 	reverse_proxy web:5000
 }
 
@@ -33,6 +36,9 @@ app.zrzur.com {
 beta.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	import security-headers
+	# the app is for signed-in people; search engines list zrzur.com,
+	# Discover and Designs instead (link previews still work)
+	header X-Robots-Tag "noindex, nofollow"
 	reverse_proxy web-beta:5000
 }
 
