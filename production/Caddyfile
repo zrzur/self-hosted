@@ -92,8 +92,13 @@ api.zrzur.com {
 	handle @internal {
 		respond 404
 	}
-	handle_path /january/* {
+	# Only the media proxy is public. /embed is for our own API (it needs
+	# january.embed_key), and the rest of January is not served at all.
+	handle_path /january/proxy* {
 		reverse_proxy january:14705
+	}
+	handle_path /january/* {
+		respond 404
 	}
 	handle_path /gifbox/* {
 		reverse_proxy gifbox:14706

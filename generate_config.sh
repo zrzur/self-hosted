@@ -121,6 +121,36 @@ if [ "${REVOLT__JANUARY__PROXY_KEY:-}" = "" ]; then
     loadSecrets
 fi
 
+# The link preview service answers our own API only, with this key (required)
+if [ "${REVOLT__JANUARY__EMBED_KEY:-}" = "" ]; then
+    echo "Generating the link preview key..."
+    printf "REVOLT__JANUARY__EMBED_KEY='%s'
+" "$(random_token 64)" >> secrets.env
+    loadSecrets
+fi
+
+# Sign-up captcha (required): Cloudflare Turnstile. The secret is typed hidden
+# and stored only in secrets.env (git-ignored). Zrzur refuses to start without it.
+if [ "${REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SECRET:-}" = "" ] || [ "${REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SITEKEY:-}" = "" ]; then
+    if [ -t 0 ]; then
+        echo "Cloudflare Turnstile keys are required (create a widget in the Cloudflare dashboard)."
+        if [ "${REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SITEKEY:-}" = "" ]; then
+            read -rp "Turnstile site key (public): " turnstile_sitekey
+            printf "REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SITEKEY='%s'
+" "$turnstile_sitekey" >> secrets.env
+        fi
+        if [ "${REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SECRET:-}" = "" ]; then
+            read -rsp "Turnstile secret key (hidden): " turnstile_secret; echo
+            printf "REVOLT__API__SECURITY__CAPTCHA__TURNSTILE_SECRET='%s'
+" "$turnstile_secret" >> secrets.env
+            unset turnstile_secret
+        fi
+        loadSecrets
+    else
+        echo "WARNING: Turnstile keys are missing from secrets.env. Zrzur will not start in production until they are set."
+    fi
+fi
+
 echo "Configuring Zrzur with hostname $DOMAIN"
 
 STOAT_HOSTNAME="https://$DOMAIN"

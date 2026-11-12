@@ -68,6 +68,11 @@ def application_secrets():
         # POST /auth/session/proxy_ticket (FeatureDisabled) and proxied media fails
         values['proxy'] = secrets.token_hex(32)
         added = True
+    if 'embed' not in values:
+        # added later: the link preview service answers only our API with this
+        # key; a release start refuses an empty one
+        values['embed'] = secrets.token_hex(32)
+        added = True
     if added:
         path.write_text(json.dumps(values))
     return values
@@ -101,11 +106,11 @@ def main():
                       f'password = {q(smtp["password"])}\nfrom_address = {q(smtp["from_address"])}')
     else:
         smtp_block = 'host = ""\nfrom_address = "no-reply@zrzur.com"'
-    # hCaptcha on sign-up, login and password reset once enter-captcha.py has stored the keys
+    # Cloudflare Turnstile on sign-up, login and password reset once enter-captcha.py has stored the keys
     captcha_path = DIRECTORY / 'captcha.json'
     captcha = json.loads(captcha_path.read_text()) if captcha_path.exists() else None
-    captcha_block = (f'[api.security.captcha]\nhcaptcha_key = {q(captcha["secret"])}\n'
-                     f'hcaptcha_sitekey = {q(captcha["sitekey"])}\n' if captcha else '')
+    captcha_block = (f'[api.security.captcha]\nturnstile_secret = {q(captcha["secret"])}\n'
+                     f'turnstile_sitekey = {q(captcha["sitekey"])}\n' if captcha else '')
     configuration = f'''production = true
 environment = "staging"
 [database]
@@ -143,6 +148,7 @@ key = {q(voice['key'])}
 secret = {q(voice['secret'])}
 [january]
 proxy_key = {q(values['proxy'])}
+embed_key = {q(values['embed'])}
 [files]
 encryption_key = {q(values['encryption'])}
 [files.preview]
