@@ -137,11 +137,11 @@ zrzur.com {
 	redir @source https://github.com/zrzur 302
 	import security-headers
 	# A static site: scripts only from itself (the theme script is a file,
-	# /theme.js), the report form talks to the API and hCaptcha, nothing
+	# /theme.js), the report form talks to the API and Cloudflare Turnstile, nothing
 	# frames it. Styles keep 'unsafe-inline' for style attributes in the
-	# prerendered pages and hCaptcha's widget.
+	# prerendered pages.
 	header {
-		Content-Security-Policy "default-src 'self'; script-src 'self' https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zrzur.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://hcaptcha.com https://*.hcaptcha.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+		Content-Security-Policy "default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zrzur.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 		X-Frame-Options DENY
 		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 	}
