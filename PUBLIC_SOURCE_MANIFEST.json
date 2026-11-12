@@ -52,8 +52,8 @@
     },
     {
       "path": "Caddyfile",
-      "sha256": "1a1ed2b695c68e9493d709d605ca2b0f7a7301205a02f082abb20ccc71c81ec6",
-      "bytes": 2094,
+      "sha256": "8797b614840e309fca1eae6cbd26152dbdc3a2fca067af67147a829361f4a395",
+      "bytes": 2276,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -124,8 +124,8 @@
     },
     {
       "path": "generate_config.sh",
-      "sha256": "c7f12226c6ae25727b9e4a903193865a8511605bd2466c4a427a9b771f1cc4cd",
-      "bytes": 12488,
+      "sha256": "52be3671bf41df0499ad6c2ebadfadd77cd278fa3272968f7818444b862b92ea",
+      "bytes": 13954,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -154,8 +154,8 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "acd66619d87b3f8a5740befd40f8967feb6a24afe861234f3e3aadf834e4efda",
-      "bytes": 6748,
+      "sha256": "bf2232bdec12d39f253e34996774d67b65533166c70fb001873da661b172d38b",
+      "bytes": 6852,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -178,8 +178,8 @@
     },
     {
       "path": "production/enter-captcha.py",
-      "sha256": "5e8b7777cbb51123a9bd0412d0ed4228207c28fa7a4d2eaccf1fc6fee4f5de1a",
-      "bytes": 901,
+      "sha256": "c438225de66073d01b6303fa020833effb0f6e2b58788c84b35ffec3eaea5abe",
+      "bytes": 916,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -196,8 +196,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "b5d235ecc91208bf515dceeb9ceb5ee0083a0dc74a585d662033a538c8690d8b",
-      "bytes": 7358,
+      "sha256": "b502c9238a27fe51c9b36f0b61f29855a24e63155d97f9aa1184c7e4bc1fd74e",
+      "bytes": 7638,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -220,8 +220,8 @@
     },
     {
       "path": "secrets.env.example",
-      "sha256": "cada796f07d7df36d08f13a47c5a972fd80eccd48473af3827d19b555d7fbda7",
-      "bytes": 2034,
+      "sha256": "41c4c11b7b92129c5901857fab03307ebdb549b18b6a98f5bfaade39e3b5a1db",
+      "bytes": 2506,
       "category": "product-source-or-build-manifest"
     }
   ],
