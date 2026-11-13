@@ -49,8 +49,8 @@ expect() { # want host path
   if [ "$got" = "$1" ]; then echo "ok   $got $2$3"; else echo "FAIL $got (want $1) $2$3"; failed=1; fi
 }
 body() { wget -qO- --header "Host: x" ${1:+--header "$1"} "http://$ip/api/ok"; }
-header() { # host name: the header's value (any answer, error pages too)
-  wget -S -qO /dev/null --header "Host: $1" "http://$ip/" 2>&1 |
+header() { # host name [path]: the header's value (any answer, error pages too)
+  wget -S -qO /dev/null --header "Host: $1" "http://$ip${3:-/}" 2>&1 |
     awk -v name="$2" 'tolower($1) == tolower(name) ":" { $1 = ""; sub(/^ /, ""); print; exit }'
 }
 expect_header() { # host name text: the header holds the text
@@ -121,8 +121,22 @@ production)
     expect_header "$h" strict-transport-security "max-age=63072000"
     expect_header "$h" x-content-type-options nosniff
   done
-  # the app is not for search engines; the public sites are
-  for h in app.zrzur.com beta.zrzur.com; do expect_header "$h" x-robots-tag noindex; done
+  # the app's front door is for search engines, what is behind the sign-in is
+  # not; the beta app stays out altogether
+  for p in / /login /login/create; do
+    got="$(header app.zrzur.com x-robots-tag "$p")"
+    if [ -z "$got" ]; then echo "ok   app.zrzur.com$p may be listed"; else echo "FAIL app.zrzur.com$p has x-robots-tag $got"; failed=1; fi
+  done
+  for p in /settings /server/x/channel/y /login/x /invite/abc; do
+    got="$(header app.zrzur.com x-robots-tag "$p")"
+    case "$got" in *noindex*) echo "ok   app.zrzur.com$p noindex" ;; *) echo "FAIL app.zrzur.com$p lacks noindex (got: $got)"; failed=1 ;; esac
+  done
+  expect_header beta.zrzur.com x-robots-tag noindex
+  expect 200 app.zrzur.com /robots.txt
+  robots="$(wget -qO- --header "Host: app.zrzur.com" "http://$ip/robots.txt")"
+  for line in 'Allow: /login$' 'Allow: /assets/' 'Disallow: /'; do
+    case "$robots" in *"$line"*) echo "ok   app robots.txt: $line" ;; *) echo "FAIL app robots.txt lacks $line"; failed=1 ;; esac
+  done
   # the website's own page policy
   expect_script_policy zrzur.com
   expect_header zrzur.com content-security-policy "frame-ancestors 'none'"

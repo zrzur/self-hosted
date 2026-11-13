@@ -154,8 +154,8 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "71d0dc60a820cbe2b8c0deff3db46e243dfdaa04eff8d5d98316e4af3185e473",
-      "bytes": 7492,
+      "sha256": "3d9ca1c7b626798a76181a07b60f9c219a1cf0c9bf7ec798f8b027ad372f4fa5",
+      "bytes": 7965,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -208,8 +208,8 @@
     },
     {
       "path": "scripts/check-edge.sh",
-      "sha256": "c44349cadb3d4ab607ddf5b463b175dfb2f1a5928b0cee7aedab8a2e5b4b3315",
-      "bytes": 6947,
+      "sha256": "3ff83110c790f23e5e8af16864a6eee88eac8123d8a9bd31de916a0eea3b87ee",
+      "bytes": 7810,
       "category": "reviewed-build-and-ci"
     },
     {

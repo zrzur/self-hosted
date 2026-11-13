@@ -26,9 +26,25 @@
 app.zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	import security-headers
-	# the app is for signed-in people; search engines list zrzur.com,
-	# Discover and Designs instead (link previews still work)
-	header X-Robots-Tag "noindex, nofollow"
+	# search engines may list the app's front door (owner, 2026-11-13: the app
+	# must show up in search and AI answers): the start, sign-in and sign-up
+	# pages. Everything behind the sign-in stays out of the index.
+	@private not path / /login /login/create
+	header @private X-Robots-Tag "noindex, nofollow"
+	handle /robots.txt {
+		header Content-Type "text/plain; charset=utf-8"
+		# the scripts and styles stay open: a search engine needs them to draw the page
+		respond <<TXT
+			User-agent: *
+			Allow: /$
+			Allow: /login$
+			Allow: /login/create$
+			Allow: /assets/
+			Disallow: /
+
+			Sitemap: https://zrzur.com/sitemap.xml
+			TXT 200
+	}
 	reverse_proxy web:5000
 }
 
