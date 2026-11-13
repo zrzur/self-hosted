@@ -107,6 +107,13 @@ production)
   # only January's media proxy is public (C2); /embed and the rest stay closed
   for p in /january/x /january/embed; do expect 404 api.zrzur.com "$p"; done
   for h in app beta discover designs events ws cdn; do expect 200 "$h.zrzur.com" /; done
+  # zrzur.cc: the bare domain goes to the website, a code to its invite page,
+  # anything else is a 404; www.zrzur.cc answers (it gave Cloudflare a 525)
+  expect 302 zrzur.cc /
+  expect 302 zrzur.cc /arab-gamers
+  expect 302 zrzur.cc /p/abc
+  expect 404 zrzur.cc /invite/abc
+  expect 308 www.zrzur.cc /abc
   # HTTPS only and no type guessing on every public site that answers 200
   # here (busybox wget shows no headers of redirects and errors, so www,
   # status and zrzur.cc are not read; they import the same snippet)

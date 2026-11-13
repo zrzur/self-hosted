@@ -199,9 +199,18 @@ status.zrzur.com {
 zrzur.cc {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	import security-headers
+	# the bare domain is not a page of its own: it goes to the website
+	redir / https://zrzur.com 302
 	@invite path_regexp invite ^/([A-Za-z0-9]+(?:-[A-Za-z0-9]+)*)$
 	redir @invite https://app.zrzur.com/invite/{re.invite.1} 302
 	@share path_regexp share ^/p/([A-Za-z0-9_-]+)$
 	redir @share https://app.zrzur.com/discover/{re.share.1} 302
 	respond "Zrzur invite links use https://zrzur.cc/{code}" 404
+}
+
+# www.zrzur.cc had no block, so Cloudflare answered 525; it is the same as zrzur.cc
+www.zrzur.cc {
+	import /etc/caddy/zrzur/cloudflare-only.caddy
+	import security-headers
+	redir https://zrzur.cc{uri} 308
 }
