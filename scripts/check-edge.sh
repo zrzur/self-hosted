@@ -57,6 +57,10 @@ expect_header() { # host name text: the header holds the text
   got="$(header "$1" "$2")"
   case "$got" in *"$3"*) echo "ok   $1 $2: $3" ;; *) echo "FAIL $1 $2 lacks $3 (got: $got)"; failed=1 ;; esac
 }
+expect_upstream() { # host path want: the path the service behind receives
+  got="$(header "$1" x-upstream-uri "$2")"
+  if [ "$got" = "$3" ]; then echo "ok   $1$2 -> $got"; else echo "FAIL $1$2 reaches '$got' (want $3)"; failed=1; fi
+}
 expect_script_policy() { # host: script-src 'self' without inline or eval
   got="$(header "$1" content-security-policy | sed -n "s/.*script-src \([^;]*\).*/\1/p")"
   case "$got" in
@@ -73,6 +77,7 @@ up() {
   cat > /tmp/run.caddy <<CADDY
 import $1
 http://:5000, http://:14702, http://:14703, http://:14704, http://:14705, http://:14706, http://:8500 {
+	header X-Upstream-Uri "{http.request.uri}"
 	respond "xff={http.request.header.x-forwarded-for}" 200
 }
 CADDY
@@ -104,6 +109,9 @@ production)
   up /w/production.caddy
   for p in /metrics /metrics/x /METRICS //metrics /./metrics; do expect 404 api.zrzur.com "$p"; done
   for p in /ok /january/proxy /gifbox/x /ingress/x; do expect 200 api.zrzur.com "$p"; done
+  # January serves its proxy at /proxy: only /january comes off the path
+  expect_upstream api.zrzur.com '/january/proxy?url=x' '/proxy?url=x'
+  expect_upstream api.zrzur.com /gifbox/x /x
   # only January's media proxy is public (C2); /embed and the rest stay closed
   for p in /january/x /january/embed; do expect 404 api.zrzur.com "$p"; done
   for h in app beta discover designs events ws cdn; do expect 200 "$h.zrzur.com" /; done
