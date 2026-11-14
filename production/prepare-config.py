@@ -160,6 +160,9 @@ path_style_buckets = {str(bool(storage.get('path_style_buckets', False))).lower(
 default_bucket = {q(storage.get('default_bucket', 'zrzur'))}
 access_key_id = {q(storage['access_key_id'])}
 secret_access_key = {q(storage['secret_access_key'])}
+[features]
+# channel webhooks (owner, 2026-11-14: the rules of Zrzur Lounge come from a webhook)
+webhooks_enabled = true
 [pushd]
 production = true
 [pushd.vapid]
