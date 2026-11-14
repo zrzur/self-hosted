@@ -154,8 +154,8 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "08e41afbafbb8ca55a1b23e045be02dd5f3f29fe0a6df4323fc237ea1dd67735",
-      "bytes": 8049,
+      "sha256": "9251cf67bb64bce70f28bfd4bd3223ed212bc1c59d6746cbf9e8a70acdfa50c0",
+      "bytes": 8188,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -172,8 +172,8 @@
     },
     {
       "path": "production/compose.yml",
-      "sha256": "a1d63106c4edfc65cf89843607931e40dcb24524ab8019b4e60fa5f7f7d52d9c",
-      "bytes": 7157,
+      "sha256": "16d936a8ebfdd3759d069cbca4e79fe345130c6ec3024baab6b24d90745e9a54",
+      "bytes": 7957,
       "category": "product-source-or-build-manifest"
     },
     {
