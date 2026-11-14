@@ -21,12 +21,6 @@
       "category": "reviewed-build-and-ci"
     },
     {
-      "path": ".github/workflows/codeql.yml",
-      "sha256": "2420ebb2303f29c0ea9193ebf72750eb66001b70d37ba8de339896ed91848e6c",
-      "bytes": 618,
-      "category": "reviewed-build-and-ci"
-    },
-    {
       "path": ".github/workflows/source-check.yml",
       "sha256": "7eb400643f81214a8620d6e9552884ea48291fb3f864edc45bc16c05f955686c",
       "bytes": 923,
