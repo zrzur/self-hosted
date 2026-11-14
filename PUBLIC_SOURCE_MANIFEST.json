@@ -160,8 +160,8 @@
     },
     {
       "path": "production/README.md",
-      "sha256": "67530a57977009c6dfb9184dc7f4ce9fa40e61456f29f6b3e6f7c385839a28c4",
-      "bytes": 7453,
+      "sha256": "83a2dea74622e85e9f556f826f5f08eedae1858354927d8d373d499a62fc2398",
+      "bytes": 8002,
       "category": "public-documentation"
     },
     {
@@ -180,6 +180,12 @@
       "path": "production/enter-captcha.py",
       "sha256": "c438225de66073d01b6303fa020833effb0f6e2b58788c84b35ffec3eaea5abe",
       "bytes": 916,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/enter-connection.py",
+      "sha256": "8fd6cb6d6b5504bb0c1f5a0b29520c43a035521308455d06b0d167cca3d9401d",
+      "bytes": 3144,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -208,8 +214,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "0cad8827deafe33e3477f47e7de3696e31dae578ac9f2dc72d068b1c8b1f3e44",
-      "bytes": 8265,
+      "sha256": "5c8fbf3c2703a05b4d607a9a85d719896e30c614194cf7380bea6dca43b7194d",
+      "bytes": 9409,
       "category": "product-source-or-build-manifest"
     },
     {
