@@ -160,8 +160,8 @@
     },
     {
       "path": "production/README.md",
-      "sha256": "ff6edebcd455234ed30448b8f64094d8bd8ee8c462917714568dba4e85cd3ffe",
-      "bytes": 7176,
+      "sha256": "67530a57977009c6dfb9184dc7f4ce9fa40e61456f29f6b3e6f7c385839a28c4",
+      "bytes": 7453,
       "category": "public-documentation"
     },
     {
@@ -195,6 +195,12 @@
       "category": "product-source-or-build-manifest"
     },
     {
+      "path": "production/enter-steam.py",
+      "sha256": "0b86fd13c9c5b5a4edbd2fcb11db0a95f553d6d46419d6c13345fa57636afab6",
+      "bytes": 1510,
+      "category": "product-source-or-build-manifest"
+    },
+    {
       "path": "production/enter-storage.py",
       "sha256": "76a50ad23d5b8a2c62603825f079d6c5ce52cd3edcc99fdd46efbc2648ede061",
       "bytes": 1188,
@@ -202,8 +208,8 @@
     },
     {
       "path": "production/prepare-config.py",
-      "sha256": "1c9cb19637a7594054a519027f9c0ab7890037d65d0640967829c23623f6ceba",
-      "bytes": 7759,
+      "sha256": "0cad8827deafe33e3477f47e7de3696e31dae578ac9f2dc72d068b1c8b1f3e44",
+      "bytes": 8265,
       "category": "product-source-or-build-manifest"
     },
     {

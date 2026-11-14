@@ -13,6 +13,7 @@ Runs zrzur.com (website), app.zrzur.com (Zrzur), beta.zrzur.com (Zrzur Beta), ap
 | `enter-smtp.py` | Hidden console input for the Resend API key, saved to `/etc/zrzur/smtp.json` (mode 600). |
 | `enter-captcha.py` | Console input for the hCaptcha site key and hidden secret, saved to `/etc/zrzur/captcha.json` (mode 600). |
 | `enter-gifbox.py` | Console input for the KLIPY GIF key (hidden); makes the media secret and saves both to `/etc/zrzur/gifbox.env` (mode 600). Then `docker compose up -d gifbox`. Without it the GIF picker has nothing to show. |
+| `enter-steam.py` | Hidden console input for the Steam Web API key (steamcommunity.com/dev/apikey), saved to `/etc/zrzur/steam.json` (mode 600). `prepare-config.py` then switches linked Steam accounts on. Without it, Settings → Connections says Steam can't be linked yet. |
 | `prepare-config.py` | Generates `/etc/zrzur/Revolt.toml`, the data-service env files and the Cloudflare range files. Prints no secrets and starts nothing. |
 
 Secrets are never stored in this repository, in shell history or in chat.

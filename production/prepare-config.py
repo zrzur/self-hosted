@@ -4,6 +4,7 @@
 Inputs (root-only, written beforehand without echoing values):
   /etc/zrzur/storage.json  from enter-storage.py
   /etc/zrzur/voice.json    LiveKit key/secret of the voice server
+  /etc/zrzur/steam.json    optional, from enter-steam.py (linked Steam accounts)
 
 Never prints secrets and never starts services. Existing secret files are kept; a differing
 generated file stops the script for review instead of being replaced.
@@ -111,6 +112,11 @@ def main():
     captcha = json.loads(captcha_path.read_text()) if captcha_path.exists() else None
     captcha_block = (f'[api.security.captcha]\nturnstile_secret = {q(captcha["secret"])}\n'
                      f'turnstile_sitekey = {q(captcha["sitekey"])}\n' if captcha else '')
+    # Linked Steam accounts once enter-steam.py has stored the Web API key; off without it
+    steam_path = DIRECTORY / 'steam.json'
+    steam = json.loads(steam_path.read_text()) if steam_path.exists() else None
+    steam_block = (f'[api.connections.steam]\nweb_api_key = {q(steam["web_api_key"])}\n'
+                   'return_origins = ["https://app.zrzur.com", "https://beta.zrzur.com"]\n' if steam else '')
     configuration = f'''production = true
 environment = "staging"
 [database]
@@ -140,7 +146,7 @@ invite_only = false
 trust_cloudflare = true
 easypwned = ""
 staff_origins = ["http://localhost:8090"]
-{captcha_block}[api.livekit.nodes.fra]
+{captcha_block}{steam_block}[api.livekit.nodes.fra]
 url = "https://voice.zrzur.com"
 lat = 50.11
 lon = 8.68
