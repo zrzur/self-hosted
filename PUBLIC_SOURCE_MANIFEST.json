@@ -160,8 +160,8 @@
     },
     {
       "path": "production/README.md",
-      "sha256": "7c4317bea4629d68591e77bccbdc8ebc44adffe0b2b5f768edc7ae6662f75b6d",
-      "bytes": 6946,
+      "sha256": "ff6edebcd455234ed30448b8f64094d8bd8ee8c462917714568dba4e85cd3ffe",
+      "bytes": 7176,
       "category": "public-documentation"
     },
     {
@@ -172,14 +172,20 @@
     },
     {
       "path": "production/compose.yml",
-      "sha256": "01a7ff4dbffb2d238aed551c68fc630a40f86a3958ea14b1f3a1f76869e1aa91",
-      "bytes": 8213,
+      "sha256": "12a423da60e326d91dd4401a17ec44c2479e1a23e1a2e0a11866049f6d4566fd",
+      "bytes": 8422,
       "category": "product-source-or-build-manifest"
     },
     {
       "path": "production/enter-captcha.py",
       "sha256": "c438225de66073d01b6303fa020833effb0f6e2b58788c84b35ffec3eaea5abe",
       "bytes": 916,
+      "category": "product-source-or-build-manifest"
+    },
+    {
+      "path": "production/enter-gifbox.py",
+      "sha256": "e174448ae5eaae5284c9ba6cdb3a4e51c1b5057f77ac71da4d628c41076a588c",
+      "bytes": 1760,
       "category": "product-source-or-build-manifest"
     },
     {
