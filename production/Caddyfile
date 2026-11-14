@@ -45,6 +45,13 @@ app.zrzur.com {
 			Sitemap: https://zrzur.com/sitemap.xml
 			TXT 200
 	}
+	# the documentation has a site of its own: an old link into the app goes
+	# there at once, before the app loads (page and ?hl= language are kept)
+	@docs path /developers/docs /developers/docs/*
+	route @docs {
+		uri strip_prefix /developers/docs
+		redir https://developers.zrzur.com{uri} 302
+	}
 	reverse_proxy web:5000
 }
 
