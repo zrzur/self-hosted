@@ -82,6 +82,12 @@ designs.zrzur.com {
 	reverse_proxy designs:5000
 }
 
+# The developer documentation: no account needed, pages prerendered
+developers.zrzur.com {
+	import public-site
+	reverse_proxy docs:5000
+}
+
 # The team's admin console: static files with strict headers (a <meta> CSP
 # cannot set frame-ancestors). It talks to api.zrzur.com/staff only.
 # To limit it to the team's addresses, add a file
