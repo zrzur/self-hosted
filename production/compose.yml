@@ -79,6 +79,11 @@ services:
     # ZRZUR_INTERNAL_TOKEN=<16+ random characters>: lets discover and designs
     # render from their own rate-limit bucket (same file for both)
     env_file: /etc/zrzur/internal.env
+    environment:
+      ROCKET_ADDRESS: 0.0.0.0
+      # sites that may call the API from a browser besides the built-in list:
+      # the documentation site reads the API root for its "Base URLs" table
+      ZRZUR_CORS_ORIGINS: https://developers.zrzur.com
 
   events:
     <<: *backend
