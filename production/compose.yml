@@ -100,6 +100,11 @@ services:
   gifbox:
     <<: *backend
     image: ghcr.io/zrzur/gifbox:${ZRZUR_BACKEND_TAG:?set ZRZUR_BACKEND_TAG}
+    # GIFBOX_KLIPY_KEY and GIFBOX_MEDIA_SECRET, written by enter-gifbox.py
+    # (mode 600). Without the file the GIF routes stay off.
+    env_file:
+      - path: /etc/zrzur/gifbox.env
+        required: false
 
   crond:
     <<: *backend
