@@ -226,7 +226,8 @@ status.zrzur.com {
 
 # Short invite/share domain — resolve codes only; do not set auth cookies here.
 # Path /{code} → app invite preview; custom server links (zrzur.cc/arab-gamers)
-# join words with single hyphens. Path /p/{id} reserved for future content shares.
+# join words with single hyphens. Path /b/{bot id} → add a bot. Path /p/{id}
+# reserved for future content shares.
 zrzur.cc {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
 	import security-headers
@@ -236,6 +237,9 @@ zrzur.cc {
 	redir @invite https://app.zrzur.com/invite/{re.invite.1} 302
 	@share path_regexp share ^/p/([A-Za-z0-9_-]+)$
 	redir @share https://app.zrzur.com/discover/{re.share.1} 302
+	# a bot's add link: zrzur.cc/b/{bot id} (the Developer Portal's permissions ride along)
+	@bot path_regexp bot ^/b/([0-9A-Za-z]{26})/?$
+	redir @bot https://app.zrzur.com/bot/{re.bot.1}{?query} 302
 	respond "Zrzur invite links use https://zrzur.cc/{code}" 404
 }
 
