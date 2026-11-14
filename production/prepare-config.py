@@ -5,6 +5,8 @@ Inputs (root-only, written beforehand without echoing values):
   /etc/zrzur/storage.json  from enter-storage.py
   /etc/zrzur/voice.json    LiveKit key/secret of the voice server
   /etc/zrzur/steam.json    optional, from enter-steam.py (linked Steam accounts)
+  /etc/zrzur/twitch.json, github.json, battlenet.json
+                           optional, from enter-connection.py (linked accounts)
 
 Never prints secrets and never starts services. Existing secret files are kept; a differing
 generated file stops the script for review instead of being replaced.
@@ -117,6 +119,21 @@ def main():
     steam = json.loads(steam_path.read_text()) if steam_path.exists() else None
     steam_block = (f'[api.connections.steam]\nweb_api_key = {q(steam["web_api_key"])}\n'
                    'return_origins = ["https://app.zrzur.com", "https://beta.zrzur.com"]\n' if steam else '')
+    # Twitch, GitHub, Battle.net once enter-connection.py has stored their client id and secret;
+    # each one stays off without its file. Twitch live status posts to the API's own address.
+    services_block = ''
+    for service in ('twitch', 'github', 'battlenet'):
+        service_path = DIRECTORY / f'{service}.json'
+        if not service_path.exists():
+            continue
+        found = json.loads(service_path.read_text())
+        services_block += (f'[api.connections.{service}]\n'
+                           f'client_id = {q(found["client_id"])}\n'
+                           f'client_secret = {q(found["client_secret"])}\n'
+                           'return_origins = ["https://app.zrzur.com", "https://beta.zrzur.com"]\n')
+        if service == 'twitch' and found.get('eventsub_secret'):
+            services_block += (f'eventsub_secret = {q(found["eventsub_secret"])}\n'
+                               'eventsub_callback = "https://api.zrzur.com/connections/twitch/events"\n')
     configuration = f'''production = true
 environment = "staging"
 [database]
@@ -146,7 +163,7 @@ invite_only = false
 trust_cloudflare = true
 easypwned = ""
 staff_origins = ["http://localhost:8090"]
-{captcha_block}{steam_block}[api.livekit.nodes.fra]
+{captcha_block}{steam_block}{services_block}[api.livekit.nodes.fra]
 url = "https://voice.zrzur.com"
 lat = 50.11
 lon = 8.68
