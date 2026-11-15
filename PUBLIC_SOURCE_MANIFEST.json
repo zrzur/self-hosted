@@ -16,14 +16,14 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "09fd344b3c8faa92393a30197141c98a4311f80d3c57cf69a7218b89aced24c5",
-      "bytes": 1865,
+      "sha256": "4e743a59476b35702aece03d0a8a10acedf018c9f67474f0be71037e1e36ee12",
+      "bytes": 1994,
       "category": "reviewed-build-and-ci"
     },
     {
       "path": ".github/workflows/source-check.yml",
-      "sha256": "7eb400643f81214a8620d6e9552884ea48291fb3f864edc45bc16c05f955686c",
-      "bytes": 923,
+      "sha256": "30184d6c4dc5695590ef41ae05a0ae388e4b67c1d3bcf32c7c40137aa2acaf8d",
+      "bytes": 966,
       "category": "reviewed-build-and-ci"
     },
     {
@@ -148,8 +148,8 @@
     },
     {
       "path": "production/Caddyfile",
-      "sha256": "6adeb03d905eb342a4ef817245ae8cdfd7dcb1a47314f22f41f10526b3fdf9e3",
-      "bytes": 8714,
+      "sha256": "8f544fe9ae304277d28d70cd2556c3a00655d4e7191653ecbbf7ca833830d548",
+      "bytes": 8974,
       "category": "product-source-or-build-manifest"
     },
     {
@@ -220,8 +220,8 @@
     },
     {
       "path": "scripts/check-edge.sh",
-      "sha256": "383c127efd836bca01430f2ce4ed8a1d208e51f00adfcdd85e2fb94c1685bb85",
-      "bytes": 8278,
+      "sha256": "e9c8c7f165af2098fa0260bf12e46abd4d981ec93167236d2a7dc7660533ec72",
+      "bytes": 9038,
       "category": "reviewed-build-and-ci"
     },
     {
