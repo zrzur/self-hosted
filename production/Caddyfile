@@ -170,8 +170,12 @@ cdn.zrzur.com {
 # The website: the built site from zrzur/website (its dist folder)
 zrzur.com {
 	import /etc/caddy/zrzur/cloudflare-only.caddy
-	@source path /source /source/*
-	redir @source https://github.com/zrzur 302
+	# /source is a page of the site (version, commit and archive of each
+	# running part, AGPL section 13), no longer a redirect to the GitHub org.
+	# One address per page, without a trailing slash: /ar/ -> /ar (ZR-010)
+	@trailing path_regexp trailing ^(/.+)/$
+	redir @trailing {re.trailing.1}{?query} 308
+	redir /index.html /{?query} 308
 	import security-headers
 	# A static site: scripts only from itself (the theme script is a file,
 	# /theme.js), the report form talks to the API and Cloudflare Turnstile, nothing

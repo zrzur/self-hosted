@@ -103,7 +103,7 @@ quickstart-proxied)
   ;;
 production)
   # a stand-in website, so zrzur.com answers 200 with its headers
-  mkdir -p /srv/website && echo ok > /srv/website/index.html
+  mkdir -p /srv/website/ar && echo ok > /srv/website/index.html && echo ok > /srv/website/source.html && echo ok > /srv/website/download.html && echo ok > /srv/website/ar.html
   mkdir -p /etc/caddy/zrzur
   for f in /w/zrzur/*; do sed "s#RANGES#$ip/32#" "$f" > "/etc/caddy/zrzur/$(basename "$f")"; done
   up /w/production.caddy
@@ -144,6 +144,15 @@ production)
   robots="$(wget -qO- --header "Host: app.zrzur.com" "http://$ip/robots.txt")"
   for line in 'Allow: /login$' 'Allow: /assets/' 'Disallow: /'; do
     case "$robots" in *"$line"*) echo "ok   app robots.txt: $line" ;; *) echo "FAIL app robots.txt lacks $line"; failed=1 ;; esac
+  done
+  # /source is the site's own page (AGPL section 13), not a redirect; every
+  # page has one address without a trailing slash (ZR-003, ZR-010)
+  for p in /source /download /ar; do expect 200 zrzur.com "$p"; done
+  for p in /source/ /download/ /ar/ /index.html; do expect 308 zrzur.com "$p"; done
+  for p in /source/x /nope; do expect 404 zrzur.com "$p"; done
+  for p in /download/:/download /ar/:/ar '/ar/?x=1':'/ar?x=1' /index.html:/; do
+    got="$(header zrzur.com location "${p%%:*}")"
+    if [ "$got" = "${p#*:}" ]; then echo "ok   zrzur.com${p%%:*} -> $got"; else echo "FAIL zrzur.com${p%%:*} -> '$got' (want ${p#*:})"; failed=1; fi
   done
   # the website's own page policy
   expect_script_policy zrzur.com
