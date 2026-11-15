@@ -196,7 +196,7 @@ services:
         target: /Revolt.toml
 
   livekit:
-    image: docker.io/livekit/livekit-server:v1.9.12
+    image: docker.io/livekit/livekit-server:v1.13.10
     depends_on:
       redis:
         condition: service_started
