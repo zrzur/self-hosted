@@ -112,8 +112,8 @@
     },
     {
       "path": "compose.yml",
-      "sha256": "4f0019760158dc76fd73c3c97810d4001103fe34b34d355804cf9964e9c66175",
-      "bytes": 5769,
+      "sha256": "1fe3565a68b0351494e12a2a2acc5665d7bb3aba68f7bc354a1ef2c616fdbdd1",
+      "bytes": 5770,
       "category": "product-source-or-build-manifest"
     },
     {
