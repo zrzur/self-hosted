@@ -157,6 +157,8 @@ production)
   # the website's own page policy
   expect_script_policy zrzur.com
   expect_header zrzur.com content-security-policy "frame-ancestors 'none'"
+  # /source reads the running web app (build.json) and API in the browser (ZR-003)
+  expect_header zrzur.com content-security-policy "https://api.zrzur.com https://app.zrzur.com"
   expect_header zrzur.com content-security-policy "object-src 'none'"
   expect_header zrzur.com referrer-policy strict-origin-when-cross-origin
   expect_header zrzur.com permissions-policy "camera=()"
