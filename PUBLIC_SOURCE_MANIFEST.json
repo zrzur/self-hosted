@@ -16,14 +16,14 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "4e743a59476b35702aece03d0a8a10acedf018c9f67474f0be71037e1e36ee12",
-      "bytes": 1994,
+      "sha256": "4756b6cbec4acf2856f520090e245d8e8b546c4f0a4a8ac5182b105786f54192",
+      "bytes": 2006,
       "category": "reviewed-build-and-ci"
     },
     {
       "path": ".github/workflows/source-check.yml",
-      "sha256": "b814f766cef9376a43b83e55dd7174b2eaf8fc4d272bb6d4b1b0c09401a699f9",
-      "bytes": 966,
+      "sha256": "0d56e7896b04c1ac81720f5288bc681ab9af6d8f136fa4a7b7d38deacb82e57e",
+      "bytes": 970,
       "category": "reviewed-build-and-ci"
     },
     {
