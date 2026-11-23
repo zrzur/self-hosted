@@ -22,7 +22,7 @@
     },
     {
       "path": ".github/workflows/source-check.yml",
-      "sha256": "0d56e7896b04c1ac81720f5288bc681ab9af6d8f136fa4a7b7d38deacb82e57e",
+      "sha256": "8f11302e0f3a724d6dbdc03adc992c4fed33026a7470da871e2304af6c8414c8",
       "bytes": 970,
       "category": "reviewed-build-and-ci"
     },
@@ -82,7 +82,7 @@
     },
     {
       "path": "RELEASE.json",
-      "sha256": "c2850d527c2f2c15acf6b1a041185ee33254876d02909987c171ac2b16e0c4d4",
+      "sha256": "0b3177163f7924b975375ece20abe47352f5adb57ce2d9513ada4673f4323114",
       "bytes": 306,
       "category": "product-source-or-build-manifest"
     },
@@ -100,8 +100,8 @@
     },
     {
       "path": "ZRZUR_RELEASE.md",
-      "sha256": "a147f2e6893a9d060bd91de4f23ccf509ef53b844d7bf0d99cc5d15a71afbd7e",
-      "bytes": 1370,
+      "sha256": "347aa952e6f580088d7b44db0dca70cabbba98428d7038c99fe7df59f77cd466",
+      "bytes": 1618,
       "category": "public-documentation"
     },
     {
