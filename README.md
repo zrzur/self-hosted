@@ -49,12 +49,13 @@ The parts it runs:
 
 ## Contributing and security
 
-- Contributing: [CONTRIBUTING.md](./CONTRIBUTING.md).
+- Contributing: [CONTRIBUTING.md](./CONTRIBUTING.md). Open pull requests into `beta`.
 - Security reports: [SECURITY.md](./SECURITY.md).
+- Code of conduct: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
 
 ## Licence and origin
 
-Zrzur is an independent, Arabic-first chat platform based on the open-source Stoat software (formerly Revolt), licensed under the AGPL, version 3 only (the upstream code grants no later versions). Zrzur is not affiliated with Stoat, stoat.chat or Revolt Platforms Ltd. Please do not report Zrzur issues to the Stoat team.
+Zrzur is an independent chat platform based on the open-source Stoat software (formerly Revolt), licensed under the AGPL, version 3 only (the upstream code grants no later versions). Zrzur is not affiliated with Stoat, stoat.chat or Revolt Platforms Ltd. Please do not report Zrzur issues to the Stoat team.
 
 - Licence: AGPL-3.0-only, see [LICENSE](./LICENSE).
 - Upstream: [stoatchat/self-hosted](https://github.com/stoatchat/self-hosted).
