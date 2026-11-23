@@ -34,14 +34,14 @@
     },
     {
       "path": "CODE_OF_CONDUCT.md",
-      "sha256": "d436e8246b2771a5501e3eac30c24d0a2a38f8dc851a06c8e4f8664168162808",
-      "bytes": 4838,
+      "sha256": "7e96e46b4b380023870b57578c9c6615b7068bc821923a6fff1bb51cbfa50ab2",
+      "bytes": 4955,
       "category": "public-documentation"
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "6bc7bb97b365a50274709c2fb6dd24a227a2aa7ae72fe26583d47a69687cc067",
-      "bytes": 987,
+      "sha256": "ea74efe678bdec135ea44c8944431a239aed5cbb5bab98f97069a748bf6636fa",
+      "bytes": 2238,
       "category": "public-documentation"
     },
     {
@@ -76,8 +76,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "bb63f515244dadb95116f0a2abd504dffb49abf2e1e1180267f448b61c6bba05",
-      "bytes": 2946,
+      "sha256": "1cdd2b5adbae5d838b15e3d960f8660e0441633400e4c16ad08fc91a3e2a429d",
+      "bytes": 3027,
       "category": "public-documentation"
     },
     {
@@ -88,8 +88,8 @@
     },
     {
       "path": "SECURITY.md",
-      "sha256": "5e8b6d39a56dd15e2a82a5c5e720ef8dfb267ce110ecefd1ff1f48cee23c896a",
-      "bytes": 535,
+      "sha256": "ee97da3e3a19cf20920e5b1eddda006b410641545d3545bffd9960dbc5eda82a",
+      "bytes": 1996,
       "category": "public-documentation"
     },
     {
