@@ -186,6 +186,36 @@ secret_access_key = {q(storage['secret_access_key'])}
 [features]
 # channel webhooks (owner, 2026-11-14: the rules of Zrzur Lounge come from a webhook)
 webhooks_enabled = true
+# Zrzur Desk through Haris (owner, 2026-11-27): the admin panel in Haris HQ #desk.
+# Every press is checked against the presser's own staff grant and TOTP code.
+[features.staff_desk]
+enabled = true
+bot = "01M7YTK72044HS3826W3W3HKQX"
+places = ["01M8FFXXD28DR7VPJYY8GNKQJ5"]
+allow_dms = false
+areas = ["overview", "lookup", "audit", "moderation", "support", "review", "servers", "billing", "settings", "staff"]
+# one line per new submission; security reports and team applications here
+inbox = "01M8FGTBFD4FGQNEE3Y40VS9KV"
+[features.staff_desk.inbox_channels]
+reports = "01M8FHA8D80269AS220YT8VQ6R"
+appeals = "01M8FHA8D80269AS220YT8VQ6R"
+verification = "01M8FHA999FAGEDTCE3PXZ2DP7"
+badges = "01M8FHA999FAGEDTCE3PXZ2DP7"
+discover = "01M8FHA999FAGEDTCE3PXZ2DP7"
+designs = "01M8FHA999FAGEDTCE3PXZ2DP7"
+plugins = "01M8FHA999FAGEDTCE3PXZ2DP7"
+support = "01M8FHAAAMAK4XZ4HZWBQK5W5A"
+bugs = "01M8FHAEQE1D72BG8B4X6K1C5M"
+feedback = "01M8FHAEQE1D72BG8B4X6K1C5M"
+beta = "01M8FHAEQE1D72BG8B4X6K1C5M"
+# Discover requests decided in Zrzur Discover by its Discover Reviewer role
+[features.discover_review]
+server = "01M7R6QRNYYA4K72SB43GX5GAA"
+channel = "01M7R8TWHBV0XZSDM271ZMA7QN"
+channel_bots = "01M7SC19TDC9CMX638373XZQB6"
+role = "01M7R8RK30YE83QB31KXWC4RWN"
+remove_role = "01M7R8RA5WQVHXYQVDV4V087PJ"
+bot = "01M7YTK72044HS3826W3W3HKQX"
 [pushd]
 production = true
 [pushd.vapid]
